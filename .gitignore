@@ -3,3 +3,8 @@
 ################################################################################
 
 /picoquic_space_test/.vs/picoquic_space_test/v16
+/picoquic_space_test/x64/Debug
+/picoquic_space_test/Debug
+/picoquic_space_test/Release
+/picoquic_space_test/x64/Release
+/picoquic_space_test/.vs
