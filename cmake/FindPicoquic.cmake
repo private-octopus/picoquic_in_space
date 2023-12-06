@@ -13,24 +13,36 @@ find_path(Picoquic_BINLOG_DIR
           ${CMAKE_BINARY_DIR}/../picoquic/loglib
           ../picotls/picoquic/ )
 
+find_path(Picoquic_TEST_DIR
+    NAMES picoquictest_internal.h
+    HINTS ${CMAKE_SOURCE_DIR}/../picoquic/picoquictest
+          ${CMAKE_BINARY_DIR}/../picoquic/picoquictest
+          ../picotls/picoquic/ )
+
 set(Picoquic_HINTS ${CMAKE_BINARY_DIR}/../picoquic ../picoquic)
 
 find_library(Picoquic_CORE_LIBRARY picoquic-core HINTS ${Picoquic_HINTS})
 find_library(Picoquic_LOG_LIBRARY picoquic-log HINTS ${Picoquic_HINTS})
+find_library(Picoquic_TEST_LIBRARY picoquic-test HINTS ${Picoquic_HINTS})
 
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set Picoquic_FOUND to TRUE
 # if all listed variables are TRUE
 find_package_handle_standard_args(Picoquic REQUIRED_VARS
     Picoquic_CORE_LIBRARY
-    Picoquic_INCLUDE_DIR)
+    Picoquic_TEST_LIBRARY
+    Picoquic_LOG_LIBRARY
+    Picoquic_INCLUDE_DIR
+    Picoquic_TEST_DIR)
 
 if(Picoquic_FOUND)
     set(Picoquic_LIBRARIES
         ${Picoquic_CORE_LIBRARY}
+        ${Picoquic_TEST_LIBRARY}
         ${Picoquic_LOG_LIBRARY})
     set(Picoquic_INCLUDE_DIRS
         ${Picoquic_INCLUDE_DIR}
+        ${Picoquic_TEST_DIR}
         ${Picoquic_BINLOG_DIR})
 endif()
 

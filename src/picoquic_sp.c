@@ -151,12 +151,8 @@ int main(int argc, char** argv)
     int retry_failed_test = 0;
     int cnx_stress_minutes = 0;
     int cnx_stress_nb_cnx = 0;
-    int cnx_ddos_packets = 0;
-    int cnx_ddos_interval = 0;
     size_t first_test = 0;
     size_t last_test = 10000;
-
-    char const* cnx_ddos_dir = NULL;
 
     debug_printf_push_stream(stderr);
 
@@ -171,7 +167,7 @@ int main(int argc, char** argv)
     {
         memset(test_status, 0, nb_tests * sizeof(test_status_t));
 
-        while (ret == 0 && (opt = getopt(argc, argv, "c:d:f:F:s:S:x:o:nrh")) != -1) {
+        while (ret == 0 && (opt = getopt(argc, argv, "c:f:F:s:S:x:o:nrh")) != -1) {
             switch (opt) {
             case 'x': {
                 optind--;
@@ -251,24 +247,6 @@ int main(int argc, char** argv)
                 }
                 else if (cnx_stress_nb_cnx < 0) {
                     fprintf(stderr, "Incorrect cnx stress number of connections: %s\n", argv[optind - 1]);
-                    ret = usage(argv[0]);
-                }
-                break;
-            case 'd':
-                if (optind + 2 > argc) {
-                    fprintf(stderr, "option requires more arguments -- c\n");
-                    ret = usage(argv[0]);
-                }
-                do_cnx_ddos = 1;
-                cnx_ddos_packets = atoi(optarg);
-                cnx_ddos_interval = atoi(argv[optind++]);
-                cnx_ddos_dir = argv[optind++];
-                if (cnx_ddos_packets <= 0) {
-                    fprintf(stderr, "Incorrect cnx ddos packets: %s\n", optarg);
-                    ret = usage(argv[0]);
-                }
-                else if (cnx_stress_nb_cnx < 0) {
-                    fprintf(stderr, "Incorrect cnx ddos interval: %s\n", argv[optind - 1]);
                     ret = usage(argv[0]);
                 }
                 break;
